@@ -237,7 +237,7 @@
         var player = new Tone.Player(src).sync().start(0)
 
         var pitchShift = new Tone.PitchShift({
-          pitch: rate
+          pitch: num - 12
         }).toMaster()
 
         player.connect(pitchShift)
