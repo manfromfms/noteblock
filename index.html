@@ -243,10 +243,8 @@
         player.connect(pitchShift)
 
         Tone.Buffer.on('load', () => {
-          alert('Ready for play')
+          Tone.Transport.start()
         })
-
-        Tone.Transport.start()
       }
     </script>
   </body>
