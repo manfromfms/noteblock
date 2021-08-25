@@ -227,17 +227,16 @@
           case 18: src = "sounds/xylobone.mp3"
           break
         }
-        /*
         soundPlayer.src = src
         soundPlayer.mozPreservesPitch = false
         soundPlayer.playbackRate = rate
         soundPlayer.play()
-        */
 
+        /*
         var player = new Tone.Player(src).sync().start(0)
 
         var pitchShift = new Tone.PitchShift({
-          pitch: num - 12
+          pitch: rate
         }).toMaster()
 
         player.connect(pitchShift)
@@ -245,6 +244,7 @@
         Tone.Buffer.on('load', () => {
           Tone.Transport.start()
         })
+        */
       }
     </script>
   </body>
