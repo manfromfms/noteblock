@@ -85,6 +85,7 @@
         font-size: min(2vw, 2vh);
       }
     </style>
+    <script src="https://unpkg.com/tone@13.8.25/build/Tone.js"></script>
   </head>
   <body>
     <div class="stuff" id="stuff">
@@ -187,50 +188,65 @@
         var soundPlayer = new Audio()
         var rate = 2 ** ((num - 12) / 12)
 
+        var src
         switch(type) {
-          case 1: soundPlayer.src = "sounds/banjo.mp3"
+          case 1: src = "sounds/banjo.mp3"
           break
-          case 2: soundPlayer.src = "sounds/bass.mp3"
+          case 2: src = "sounds/bass.mp3"
           break
-          case 3: soundPlayer.src = "sounds/bassatack.mp3"
+          case 3: src = "sounds/bassatack.mp3"
           break
-          case 4: soundPlayer.src = "sounds/bd.mp3"
+          case 4: src = "sounds/bd.mp3"
           break
-          case 5: soundPlayer.src = "sounds/bell.mp3"
+          case 5: src = "sounds/bell.mp3"
           break
-          case 6: soundPlayer.src = "sounds/bit.mp3"
+          case 6: src = "sounds/bit.mp3"
           break
-          case 7: soundPlayer.src = "sounds/cow_bell.mp3"
+          case 7: src = "sounds/cow_bell.mp3"
           break
-          case 8: soundPlayer.src = "sounds/didgeridoo.mp3"
+          case 8: src = "sounds/didgeridoo.mp3"
           break
-          case 9: soundPlayer.src = "sounds/flute.mp3"
+          case 9: src = "sounds/flute.mp3"
           break
-          case 10: soundPlayer.src = "sounds/guitar.mp3"
+          case 10: src = "sounds/guitar.mp3"
           break
-          case 11: soundPlayer.src = "sounds/harp.mp3"
+          case 11: src = "sounds/harp.mp3"
           break
-          case 12: soundPlayer.src = "sounds/harp2.mp3"
+          case 12: src = "sounds/harp2.mp3"
           break
-          case 13: soundPlayer.src = "sounds/hat.mp3"
+          case 13: src = "sounds/hat.mp3"
           break
-          case 14: soundPlayer.src = "sounds/icechime.mp3"
+          case 14: src = "sounds/icechime.mp3"
           break
-          case 15: soundPlayer.src = "sounds/iron_xylophone.mp3"
+          case 15: src = "sounds/iron_xylophone.mp3"
           break
-          case 16: soundPlayer.src = "sounds/pling.mp3"
+          case 16: src = "sounds/pling.mp3"
           break
-          case 17: soundPlayer.src = "sounds/snare.mp3"
+          case 17: src = "sounds/snare.mp3"
           break
-          case 18: soundPlayer.src = "sounds/xylobone.mp3"
+          case 18: src = "sounds/xylobone.mp3"
           break
         }
-
+        /*
+        soundPlayer.src = src
         soundPlayer.mozPreservesPitch = false
-        soundPlayer.webkitPreservesPitch = false
-        soundPlayer.msPreservesPitch = false
         soundPlayer.playbackRate = rate
         soundPlayer.play()
+        */
+
+        var player = new Tone.Player(src).sync().start(0)
+
+        var pitchShift = new Tone.PitchShift({
+          pitch: rate
+        }).toMaster()
+
+        player.connect(pitchShift)
+
+        Tone.Buffer.on('load', () => {
+          alert('Ready for play')
+        })
+
+        Tone.Transport.start()
       }
     </script>
   </body>
