@@ -2,23 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" user-scalable="no">
     <title>Note Blocks</title>
     <style media="screen">
-@Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTap(MotionEvent e) {
-        //Тут вернем true, тем самым игнорим двойной клик
-        return true;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent e) {
-        return true;
-    }
       .layer {
         display: flex;
         justify-content: flex-start;
@@ -143,7 +129,6 @@
     </div>
 
     <script type="text/javascript">
-webView.getSettings().setUseWideViewPort(false)
     var showAll = () => {
       var out = ''
       for (var i = 1; i < localStorage.length; i++){
