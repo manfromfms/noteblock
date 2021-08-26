@@ -2,13 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Note Blocks</title>
     <style media="screen">
       .layer {
         display: flex;
         justify-content: flex-start;
-        flex-wrap: wrap;
       }
 
       .control {
@@ -17,7 +16,7 @@
       }
 
       .block {
-        margin: 1px;
+        margin: 3px;
         min-width: min(15vw, 15vh);
         min-height: min(15vw, 15vh);
         font-size: min(2vw, 2vh);
@@ -130,6 +129,37 @@
     </div>
 
     <script type="text/javascript">
+
+    var keys = [
+      `1234567890-=`,
+      `qwertyuiop[]`,
+      `asdfghjkl;''`,
+      `zxcvbnm,./`
+    ]
+    document.addEventListener('keypress', (event) => {
+      const keyName = event.key
+
+      var px
+      var py
+
+      for(let i in keys) {
+        for(let j in keys[i]) {
+          if(keys[i][j] == keyName) {
+            py = i
+            px = j
+          }
+        }
+      }
+
+      if(!px || !py) return console.log(px, py)
+      console.log(px, py)
+
+      var layer = document.querySelector('#stuff').children[py]
+      var btn = layer.firstElementChild.children[px]
+
+      btn.onclick()
+    })
+
     var showAll = () => {
       var out = ''
       for (var i = 1; i < localStorage.length; i++){
@@ -148,7 +178,6 @@
 
       localStorage.setItem(name, document.querySelector('#stuff').innerHTML)
     }
-
     var load = () => {
       var name = document.querySelector('#name').value
       if(name == '') {
@@ -163,7 +192,6 @@
       var div = e.parentElement.parentElement.firstElementChild
       div.removeChild(div.lastChild)
     }
-
     var addLayer = (e) => {
       var div = e.parentElement.parentElement.firstElementChild
       div.insertAdjacentHTML('beforeend', `<div class="layer"><div class="notes"></div><button class="add" onclick="addButton(this)">+</button><button class="remove" onclick="removeButton(this)">-</button></div>`)
@@ -173,7 +201,6 @@
       var div = e.parentElement.firstElementChild
       div.removeChild(div.lastChild)
     }
-
     var addButton = (e) => {
       var num = Math.floor(document.querySelector('#num').value)
 
@@ -181,10 +208,10 @@
       var type = document.querySelector('#type').value
       var div = e.parentElement.firstElementChild
 
-      div.insertAdjacentHTML('beforeend', `<button class="block" onclick="playLowerNote(${num}, ${type})">${num}<br>Type: ${text}</button>`)
+      div.insertAdjacentHTML('beforeend', `<button class="block" onclick="playLowerNote(${num}, ${type})">${num}<br>${text}</button>`)
     }
 
-      async function playLowerNote(num, type) {
+    async function playLowerNote(num, type) {
         var soundPlayer = new Audio()
         var rate = 2 ** ((num - 12) / 12)
 
@@ -232,20 +259,6 @@
         soundPlayer.preservesPitch = false
         soundPlayer.playbackRate = rate
         soundPlayer.play()
-
-        /*
-        var player = new Tone.Player(src).sync().start(0)
-
-        var pitchShift = new Tone.PitchShift({
-          pitch: rate
-        }).toMaster()
-
-        player.connect(pitchShift)
-
-        Tone.Buffer.on('load', () => {
-          Tone.Transport.start()
-        })
-        */
       }
     </script>
   </body>
