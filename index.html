@@ -4,6 +4,21 @@
     <meta charset="utf-8">
     <title>Note Blocks</title>
     <style media="screen">
+@Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        //Тут вернем true, тем самым игнорим двойной клик
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        return true;
+    }
       .layer {
         display: flex;
         justify-content: flex-start;
